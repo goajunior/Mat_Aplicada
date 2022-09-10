@@ -1,0 +1,483 @@
+% Template created by Karol Kozioł (www.karol-koziol.net) for ShareLaTeX
+
+\documentclass[a4paper,portuguese,9pt,final]{extarticle}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{pgf,tikz}
+
+\usepackage{enumitem}
+\usepackage{flexisym}
+
+\usetikzlibrary{shapes, calc, shapes, arrows, babel}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\everymath{\displaystyle}
+\usepackage{mathrsfs}
+\usepackage{times}
+\renewcommand\familydefault{\sfdefault}
+\usepackage{tgheros}
+\usepackage{gensymb}
+% \usepackage[defaultmono,scale=0.85]{droidmono}
+
+\usepackage{multicol}
+\setlength{\columnseprule}{0pt}
+\setlength{\columnsep}{20.0pt}
+
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{eurosym}
+
+\usepackage{graphicx}
+\graphicspath{{./img/}}
+\usepackage{svg}
+
+\usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{
+a4paper,
+total={210mm,297mm},
+left=10mm,right=10mm,top=10mm,bottom=15mm}
+
+\linespread{1.3}
+
+\newcommand{\samedir}{\mathbin{\!/\mkern-5mu/\!}}
+
+% custom title
+\makeatletter
+\renewcommand*{\maketitle}{%
+\noindent
+\begin{minipage}{0.6\textwidth}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=6pt,inner sep=10pt,fill=blue!50!black,text width= 0.95\textwidth] {\color{white}\Huge \@title};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.35\textwidth}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=3pt,inner sep=10pt,draw=blue!50!black,text width= 0.95\textwidth] {\begin{tabular}{cc} \multirow{2}{1cm}{\includegraphics[width=0.15\columnwidth]{brasao}}& \@author \\ & \ies \end{tabular}};
+\end{tikzpicture}
+\end{minipage}
+\bigskip\bigskip
+}%
+\makeatother
+
+% custom section
+\usepackage[explicit]{titlesec}
+\newcommand*\sectionlabel{}
+\titleformat{\section}
+  {\gdef\sectionlabel{}
+   \normalfont\sffamily\Large\bfseries\scshape}
+  {\gdef\sectionlabel{\thesection\ }}{0pt}
+  {
+\noindent
+\begin{tikzpicture}
+\node[rectangle,rounded corners=3pt,inner sep=4pt,fill=blue!50!black,text width= 0.95\columnwidth] {\color{white}\sectionlabel#1};
+\end{tikzpicture}
+  }
+\titlespacing*{\section}{0pt}{15pt}{10pt}
+
+
+% custom footer
+\usepackage{fancyhdr}
+\makeatletter
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot[C]{\footnotesize \@author \  \ies}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\makeatother
+\usepackage{multirow} % para las tablas
+
+\title{Problemas de Valor de Contorno para Equações Diferenciais Parciais}
+\author{Programa de Pós-Graduação}
+\newcommand{\ies}{em Engenharia Civil}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem*{definition}{Definição}
+\newtheorem*{remark}{Observação}
+\newtheorem{corollary}{Corolário}[section]
+\newtheorem{lema}{Lema}[section]
+\newtheorem{example}{Exemplo}[section]
+
+
+\providecommand{\sin}{} \renewcommand{\sin}{sen}
+
+
+\begin{document}
+\maketitle
+
+\begin{multicols*}{2}
+
+
+\section{Definições Importantes}
+
+    \begin{definition}
+
+
+        Conjunto Aberto: conjunto cujos pontos são todos pontos interiores. \\
+
+    \end{definition}
+
+    \begin{definition}
+
+        Domínio: chamaremos de domínio a todo subconjunto de $ \mathbb{R}^{n} $ conectado e aberto. \\
+    
+    \end{definition}
+
+    \begin{definition}
+
+        
+        Contorno: a curva no $ \mathbb{R}^{n} $ que delimita o domínio $\Omega$ será chamada de contorno de $\Omega$ e será simbolizada por $\Gamma $.\\
+
+    
+    \end{definition}
+
+    \begin{definition}
+
+
+        Problema de valor de contorno (PVC) para equações diferenciais parciais (EDP): um PVC para EDP será composto por:
+
+        \begin{itemize}
+            \item[\textbf{a)}] Um domínio $\Omega$;
+            \item[\textbf{b)}] Um contorno $\Gamma $ de $\Omega$;
+            \item[\textbf{c)}] Uma EDP válida para todos os pontos $\in \Omega$ e condições de contorno em $\Gamma$.
+        \end{itemize}
+    
+    \end{definition}
+
+\section{Estudo de Casos (EDPs Canônicas)}
+
+    \subsection{Equação da Onda Unidimensional}
+
+            O problema de se encontrar a função $u(x,t)$, que descreve o deslocamento de uma corda elástica ao longo do eixo $x$ e presa nas suas duas extremidades, pode ser modelado pela equação da onda unidimensional.
+
+            $$ \nabla^{2} u=\frac{1}{a^{2}}\frac{\partial^{2}u }{\partial t^{2}} ,$$
+            onde $a>0$ é a velocidade de propagação da onda no meio. Para este estudo de caso, iremos considerar como $\pi$ o comprimento da corda. Conhecemos também duas condições iniciais:
+            $$u(x,0)=f(x)$$
+            $$\frac{\partial u}{\partial t}(x,0)=g(x)$$
+            A primeira condição inicial refere-se à posição inicial da corda, enquanto que a segunda condição inicial refere-se à velocidade inicial da corda.
+
+            Para resumir, o PVC para EDP com condições iniciais deste caso é:
+
+            $$  \nabla^{2} u=\frac{1}{a^{2}}\frac{\partial^{2}u }{\partial t^{2}} \ , 0<x<\pi \mbox{ , com } \begin{cases}
+            u(0,t)=u(\pi,t)=0\\
+            u(x,0)=f(x) \mbox{ e } \frac{\partial u}{\partial t}(x,0)=g(x)
+            \end{cases}    $$
+
+            Como admitimos que $u$ é uma função de $x$ e $t$ $(u(x,t))$, nada mais natural imaginar que a solução desse problema pode ser escrita como o produto de duas funções:
+            $$ u(x,t)=X(x)T(t) \,$$
+            onde X e T são funções que dependem exclusivamente de $x$ e $t$ respectivamente. Nós teremos que assumir que $X$ e $T$ $\in C^{2}[0,\pi]$, sendo assim
+            $$  \nabla^{2}u=X''(x)T(t)  \mbox{ \ e \ }   \frac{\partial^{2}u }{\partial t^{2}} = X(x)T''(t).$$
+
+            Substituindo essas duas expressões na EDP da onda teremos:
+            \begin{itemize}
+                \item[]$$ X''(x)\ T(t)=\frac{1}{a^{2}}\ X(x)\ T''(t) \mbox{\ \ ou \ }$$
+                \item[] $$\frac{X''}{X} = \frac{1}{a^{2}}\frac{T''}{T} $$
+            \end{itemize}
+            sempre que $XT\neq 0$. O lado esquerdo da última equação depende apenas da variável $x$, por sua vez o lado direito depende apenas de $t$. Isso só é possível se ambos os lados forem iguais a uma constante $\lambda$.
+
+            Dessa forma, podemos escrever:
+            \begin{itemize}
+                \item[]$$X''(x)-\lambda X(x) = 0$$
+                \item[]$$ T''(t) - \lambda a^{2} T(t) =0,$$
+            \end{itemize}
+            onde a primeira equação tem que atender a $ X(0)=X(\pi)=0 $ e neste caso recairemos num PSL. Esse PSL admite como soluções
+
+            $X_{n}(x)=sen(nx) \ , \ n=1,2,... \mbox{ \ \ associadas a autovalores \ } \lambda_{n}=-n^{2}$.\\
+
+            Quando $\lambda=-n^{2}$, a solução geral de $ T''(t) - \lambda a^{2} T(t) =0 $ é 
+
+            $T_{n}(t)=A_{n}\sin(nat)+B_{n}\cos(nat)$, onde $ A_{n} $ e $ B_{n} $ são constantes a serem determinadas. Agora, podemos multiplicar $ X $ e $ T $:
+            $$  u_{n}(x,t)=(\sin(nx))(A_{n}\sin(nat)+B_{n}\cos(nat))  $$
+
+            Resta aplicar as condições iniciais $ u(x,0)=f(x) $ e  $ \frac{\partial u}{\partial t}(x,0)=g(x) $.
+
+            Estas condições serão aplicadas em:
+            $$  u(x,t)=\sum_{n=1}^{\infty} u_{n}(x,t) = \sum_{n=1}^{\infty} \sin(nx)(A_{n}\sin(nat)+B_{n}\cos(nat))$$
+            Para $t=0$,
+            $$  u(x,0)=\sum_{n=1}^{\infty} B_{n}\sin(nx)=f(x)  \ ,  $$
+            ou seja, a condição inicial $ u(x,0)=f(x) $ será satisfeita se essa série convergir na média para $ f(x) $ no intervalo $ [0,\pi] $. A determinação dos $ B_{n} $'s pode ser feita através da série de Fourier da extensão periódica ímpar de $ f(x) $:
+
+            $$  B_{n}=\frac{2}{\pi}\int_{0}^{\pi}f(x)\sin(nx)dx  $$\\
+
+            As constantes $ A_{n} $'s podem ser determinadas de maneira semelhante. Primeiro, vamos \ \ derivar \ \  $\displaystyle u(x,t)=\sum_{n=1}^{\infty}\sin(nx)(A_{n}\sin(nat)+B_{n}\cos(nat)) $ \  e \  aplicar \   $ \frac{\partial u}{\partial t}(x,0)=g(x) $:
+
+            $$  g(x)=\sum_{n=1}^{\infty}naA_{n}\sin(nx) \mbox{ \, onde} $$
+
+            $$  A_{n}=\frac{2}{n\pi a} \int_{0}^{\pi}g(x)\sin(nx)dx \ . $$\\
+
+            \begin{example}	
+                \setlength{\jot}{10pt}
+                Resolver o PVC para eq. da onda:
+                    $$\nabla^{2} u=\frac{1}{4}\frac{\partial^{2}u }{\partial t^{2}} \ , 0<x<30,$$ com 
+
+                    $$u(0,t) = u(30,t) =0$$  e $$u(x,0) = f(x) =\begin{cases}
+                        \frac{x}{10}, \; 0 \leq x \geq 10  \\ 
+                        \\
+                \frac{(30-x)}{20},\; 10 < x \leq 30
+                \end{cases}$$
+            \end{example}
+
+    \subsection{Equação do Calor}
+
+        O problema unidimensional do calor é dado pelo PVC:
+
+        $$ a^{2}\nabla^{2}u=\frac{\partial u}{\partial t} \mbox{ \ \ em \ \ } \Omega = 0<x<L \mbox{ , com}$$
+        \begin{itemize}
+            \item[]$ u(x,0) = f(X) $ (Distribuição inicial de temperatura)
+            \item[]$ u(0,t) = 0 \ , \ u(L,t)=0 \ , t>0$  (Condições de contorno).
+        \end{itemize}
+
+        Supondo:
+        $$u(x,t)=X(x)T(t).$$
+
+        E substituindo na EDP:
+        $$a^{2}X''T=XT'.$$
+
+        Separando as variáveis temos:
+        $$\displaystyle \frac{X''}{X}=\frac{1}{a^{2}}\frac{T'}{T}=-\lambda. \mbox{ \ \ \ \textbf{(i)}}$$
+
+        Os lados esquerdos nos levam ao seguinte PSL associado:
+        $$X''+\lambda X = 0$$
+
+        E $X(0)=X(L)=0$ \ implica que teremos a solução:
+        $$ X_{n}=\sin\frac{n\pi x}{L} \ , \ n=1,2,3,...,$ com os autovalores $ \lambda_{n}=\frac{n^{2}\pi^{2}}{L^{2}} \ , \ n=1,2,3,... . $$
+
+        O lado direito de (i) nos conduz a:
+        $$T'+\left(\frac{n^{2}a^{2}\pi^{2}}{L^{2}}\right)T=0$$ \ \ \ \ \ (um PSL com 1 raiz real)\\
+
+        \
+
+        A variável $T(t)$ será proporcional a $ e^{-\frac{n^{2}a^{2}\pi^{2}}{L^{2}}t} $ e assim chegamos a 
+
+        $$u_{n}(x,t)=e^{-\frac{n^{2}a^{2}\pi^{2}}{L^{2}}t} \sin \left(\frac{n \pi x}{L}\right) \ \ , \ n=1,2,3,... .$$
+
+        Precisamos impor a condição inicial $u(x,0)=f(x)$:
+        \begin{itemize}
+            \item[] $ \displaystyle u(x,t)=\sum_{n=1}^{\infty} b_{n} u_{n}(x,t) = \sum_{n=1}^{\infty} b_{n}e^{-\frac{n^{2}a^{2}\pi^{2}}{L^{2}}t} \sin \left(\frac{n \pi x}{L}\right) $
+            \item[] $ \displaystyle u(x,0)= \sum_{n=1}^{\infty} b_{n} \sin \left(\frac{n \pi x}{L}\right) = f(x) $ , com
+            \item[] $ \displaystyle b_{n}=\frac{2}{L} \int_{0}^{L} f(x) \sin \left(\frac{n \pi x}{L}\right) dx. $
+        \end{itemize}
+
+        \begin{example}	
+            \setlength{\jot}{10pt}
+            Resolver o PVC para eq. do calor:
+                $$\nabla^{2} u=\frac{\partial u }{\partial t} \ , 0<x<50,$$ com 
+
+                $$u(0,t) = u(50,t) =0$$  e $$u(x,0) = 20^{\circ}.$$ 
+        \end{example}
+
+        \subsection{Equações do Calor com Condições de Contorno não Homogêneas}
+
+        Vamos considerar o caso em que o PVC da eq. do calor não possui condições de contorno homogêneas:
+        \begin{itemize}
+            \item[] $$a^{2}\nabla^{2}u=\frac{\partial u}{\partial t} \ , \ 0<x<L \ , \ t>0,$$
+            \item[] $$u(0,t)=T_{1} \ , \ u(L,t)=T_{2},$$
+            \item[] $$u(x,0) = f(x)$$
+        \end{itemize}
+
+        Para resolver esse problema em particular, lançaremos mão de um argumento físico simples: depois de um tempo longo, ou seja, quando $t\to \infty$, a barra alcançará uma temperatura estacionária $ v(x) $. Devido à sua estacionariedade, $v(x)$ satisfaz a:
+        \begin{itemize}
+            \item[] $$v''(x)=0 \ , \ 0<x<L$$ com as cond. de contorno:
+            \item[] $$v(0)=T_{1} \ , \ v(L)=T_{2}.$$
+        \end{itemize}
+
+        Após integrar $v''(x)=0$ duas vezes e aplicando as cond. de contorno teremos 
+
+        $$ v(x)=(T_{2}-T_{1}) \frac{x}{L} + T_{1} $$
+
+        E agora, iremos expressar $ u(x,t) $ como a soma de uma solução permanente com uma solução de regime transiente:
+        \begin{itemize}
+            \item[] $$u(x,t)=v(x)+w(x,t),$$
+            \item[] $$a^{2}\nabla^{2}(v+w) =  \frac{\partial (v+w)}{\partial t} \Rightarrow a^{2}\nabla^{2}w = \frac{\partial w}{\partial t}.$$
+        \end{itemize}
+
+        E as condições de contorno ficam:
+        \begin{itemize}
+            \item[] $ u(0,t) = v(0) + w(0,t) \Rightarrow w(0,t) = T_{1}-T_{1} = 0 $
+            \item[] $ u(L,t) = v(L) + w(L,t) \Rightarrow w(L,t) = T_{2}-T_{2} = 0 $
+        \end{itemize}
+        \
+
+        A condição inicial é:
+        $$ u(x,0)=v(x)+w(x,0)=f(x) \Rightarrow w(x,0) = f(x)-v(x) $$
+
+        Após essas mudanças de variáveis, a solução do problema é:
+
+        $$  u(x,t)=(T_{2}-T_{1})\frac{x}{L} + T_{1} + \sum_{n=1}^{\infty} b_{n} e^{-\frac{n^{2}a^{2}\pi^{2}}{L^{2}}t} \sin \left(\frac{n \pi x}{L}\right) \mbox{ \ , onde}   $$
+        $$  b_{n}=\frac{2}{L} \int_{0}^{L} [f(x)-v(x) ] \sin \left(\frac{n \pi x}{L}\right) dx.$$
+
+        \begin{example}	
+            $$\nabla^2 u = \frac{\partial u}{\partial t}, 0<x<30$$
+
+            $$u(0,t) = 20^{\circ}, u(30,t) = 50^{\circ}$$
+
+            $$u(x,0) = 60 - 2x, 0<x<30.$$
+        \end{example}
+
+        \subsection{Equação do Calor com Extremidades da Barra Isoladas}
+
+        Queremos resolver a equação do calor para os casos nos quais um material isolante térmico está aplicado nas extremidades da barra. O fluxo de calor é dado pela derivada da temperatura em relação à variável espacial $x$. O PVC com as condições iniciais é
+
+        \begin{itemize}
+            \item[] $$ a^{2}\nabla^{2}u =  \frac{\partial u}{\partial t} \ , \ 0<x<L$$
+            \item[] $$ u(x,0)=f(x)$$
+            \item[] $$ \frac{\partial u}{\partial x} (0,t) = \frac{\partial u}{\partial x} (L,t) =0.$$
+        \end{itemize}
+
+        Mais uma vez podemos considerar $ u(x,t)=X(x)T(t) $, com o PSL derivado:
+        $$ \frac{X''}{X} = \frac{1}{a^{2}} \frac{T'}{T} = -\lambda \Rightarrow \begin{cases}
+        X''+\lambda X = 0 \\ 
+        T'+a^{2}\lambda T=0
+        \end{cases}$$
+
+        As condições de contorno exigem que X'(0)=0 e X'(L)=0. Esse PSL só tem soluções não triviais em dois casos:
+
+        \begin{itemize}
+            \item Caso 1 ($\lambda = 0$) $\Rightarrow X''=0$ e $ X=c_{1}x+c_{2}$
+        \end{itemize}
+
+        As condições de contorno implicam que $ c_{1}=0 $, porém não determinam $ c_{2} $. Logo $ \lambda=0 $ é um autovalor e a autofunção é $ X(x)=1 $. Para $ \lambda=0 $, temos $ T(t) $ também constante, Podemos concluir que $ u(x,t)=c_{2} $.
+
+        \begin{itemize}
+            \item Caso 2 ($\lambda >0 $):
+        \end{itemize}
+
+        Consideraremos $ \lambda = \mu^{2} $, então a equação na variável espacial fica 
+
+        $$X''+\mu^{2}X=0,$$   que admite como solução
+
+        $$ X=c_{1}\sin\mu x + c_{2} \cos\mu x. $$
+
+        A condição $ X'(0)=0 $ nos fornece $c_{1}=0$. A condição $X'(L)=0$ implica em:
+
+
+        $$\mu_{n}=\frac{n\pi}{L} \ , \ n=1,2,..., $$ com autofunção  $$ X_{n}(x) = \cos \left(\frac{n\pi x}{L}\right) $$ e 
+        $$ \lambda_{n} = \frac{n^{2}\pi^{2}}{L^{2}}.$$
+
+        As soluções na variável temporal são proporcionais a $ e^{-\frac{n^{2}a^{2}\pi^{2}}{L^{2}}t}  $. \\
+
+        Combinando os casos 1 e 2 temos:
+        \begin{itemize}
+            \item[] $ u_{0}(x,t)= 1$
+            \item[] $ u_{n}(x,t)= e^{-\frac{n^{2}a^{2}\pi^{2}}{L^{2}}t} \cos \left(\frac{n\pi x}{L}\right)  $ , $n=1,2,3,...$
+        \end{itemize}
+        \
+
+        A condição inicial deve atender a
+
+        $$  u(x,t) = \frac{a_{0}}{2} u_{0}(x,t) + \sum_{n=1}^{\infty} a_{n}u_{n}(x,t)  $$
+
+        $$ u(x,t) = \frac{a_{0}}{2} + \sum_{n=1}^{\infty} a_{n} e^{-\frac{n^{2}a^{2}\pi^{2}}{L^{2}}t} \cos \left(\frac{n\pi x}{L}\right)  $$ \\
+
+
+        Como $ u(x,0)=f(x) $:
+
+        $$  u(x,0)=f(x)= \frac{a_{0}}{2} + \sum_{n=1}^{\infty} a_{n} \cos \left(\frac{n\pi x}{L}\right),$$ com
+        $$ a_{n}=\frac{2}{L} \int_{0}^{L}f(x)\cos \left(\frac{n\pi x}{L}\right) dx.$$ \\
+
+        \begin{example}	
+            $$\nabla^2 u = \frac{\partial u}{\partial t}, 0<x<25$$
+
+            $$\frac{\partial}{\partial x}u(0,t) = \frac{\partial}{\partial x}u(25,t) = 0$$
+
+            $$u(x,0) = x, 0<x<25.$$
+        \end{example}
+
+    \subsection{Equação de Laplace em Regiões Retangulares}
+
+    A equação de Laplace definida num domínio retangular pode ser escrita na forma:
+
+    $$ \nabla^{2}u =0, 0< x < b, 0 < y < h, \Omega = ]0,b[ \times ]0,h[.$$
+
+    Podemos ter as seguintes condições de contorno:
+
+    $$u(0,y) = u(b,y) = u(x,h)) = 0, u(x,0)=f(x).$$
+
+    Vamos admitir que a solução desse PVC pode ser escrita como o produto de 2 variáveis:
+
+    $$u(x,y) = X(x)Y(y).$$
+
+    Dessa forma:
+
+    $$\nabla^{2}u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = 0,$$ e 
+
+    $$\frac{\partial^2 u}{\partial x^2} = X''Y$$ e
+
+    $$\frac{\partial^2 u}{\partial y^2} = XY'',$$ logo:
+
+    $$-\frac{X''}{X} = \frac{Y''}{Y} = \lambda.$$
+    
+    Mais uma vez temos um par de EDOs:
+
+    $$X'' + \lambda X = 0, \mbox{ \ \ \ \textbf{(i)}}$$ 
+
+    $$Y'' - \lambda Y = 0. \mbox{ \ \ \ \textbf{(ii)}}$$
+
+    A eq. \textbf{(i)} com as condições de contorno $X(0)=X(b)=0$ formam um PSL e suas autofunções são:
+
+    $$X_n = A_n \sin{(\frac{n\pi x}{b})}, n = 1, 2, 3, ...,$$
+com os autovalores:
+
+    $$\lambda_n = \frac{n^2\pi^2}{b^2}.$$
+
+    Para esses valores de $\lambda$, a eq. \textbf{(ii)} se torna:
+
+    $$Y'' - \frac{n^2\pi^2}{b^2} Y = 0.$$
+
+    O PSL (com a condição de contorno $Y(h) = 0$) tem como solução
+
+    $$Y_n = B_n senh{(\frac{n\pi y}{b})} + C_n cosh{(\frac{n\pi y}{b})}, n = 1, 2, 3, ... .$$
+
+    Impondo  a condição de contorno:
+
+    $$B_n senh{(\frac{n\pi y}{b})} + C_n cosh{(\frac{n\pi y}{b})} = 0, n = 1, 2, 3, ... .$$
+
+
+    Essa condição, para ser atendida precisa, ter
+
+    $$B_n =  -cosh{(\frac{n\pi h}{b})}, C_n = senh{(\frac{n\pi h}{b})}, n = 1, 2, 3, ... .$$
+
+
+    Podemos obter
+
+    $$Y_n = senh{(\frac{n\pi}{b} (h-y))}, n = 1, 2, 3, ... ,$$
+se utilizarmos a identidade
+
+    $$senh(\alpha - \beta) = senh(\alpha)cosh(\beta) - cosh(\alpha)senh(\beta).$$
+
+    Juntando $X(x)$ e $Y(y)$ temos
+
+    $$u_n (x,y) = A_n \sin{(\frac{n\pi x}{b})}senh{(\frac{n\pi}{b} (h-y))}, n = 1, 2, 3, ... ,$$
+    restando impor a última condição de contorno ($u(x,0)=f(x)$):
+
+    $$u(x,y) = \sum_{n=1}^{\infty} A_n \sin{(\frac{n\pi x}{b})}senh{(\frac{n\pi}{b} (h-y))},$$
+
+    $$u(x,0) = \sum_{n=1}^{\infty} A_n \sin{(\frac{n\pi x}{b})}senh{(\frac{n\pi}{b} (h))} = f(x).$$
+
+    Essa última expressão nos indica que podemos determinar os termos $A_n$ através da série de Fourier da extensão ímpar de $f(x)$:
+
+    $$A_n senh{(\frac{n\pi h}{b})} = \frac{2}{b} \int_0^{b} f(x) \sin{(\frac{n\pi x}{b})}dx.$$
+
+
+    Por fim, a solução da eq. de Laplace é
+
+    $$u(x,y) = \frac{2}{b} \sum_{n=1}^{\infty} \frac{\int_0^{b} f(x) \sin{(\frac{n\pi x}{b})}dx}{senh{(\frac{n\pi h}{b})}}\sin{(\frac{n\pi x}{b})}senh{(\frac{n\pi}{b} (h-y))}.$$
+
+
+
+
+
+
+
+
+
+
+\end{multicols*}
+
+\end{document}
