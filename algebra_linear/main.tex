@@ -1,0 +1,502 @@
+% Template created by Karol Kozioł (www.karol-koziol.net) for ShareLaTeX
+
+\documentclass[a4paper,portuguese,9pt]{extarticle}
+\usepackage{ucs}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{pgf,tikz}
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+\usepackage{flexisym}
+
+\usetikzlibrary{shapes, calc, shapes, arrows, babel}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\everymath{\displaystyle}
+
+\usepackage{times}
+\renewcommand\familydefault{\sfdefault}
+\usepackage{tgheros}
+\usepackage[defaultmono,scale=0.85]{droidsansmono}
+
+\usepackage{multicol}
+\setlength{\columnseprule}{0pt}
+\setlength{\columnsep}{20.0pt}
+
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{eurosym}
+
+\usepackage{graphicx}
+\graphicspath{{./img/}}
+\usepackage{svg}
+
+\usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{
+a4paper,
+total={210mm,297mm},
+left=10mm,right=10mm,top=10mm,bottom=15mm}
+
+\linespread{1.3}
+
+\newcommand{\samedir}{\mathbin{\!/\mkern-5mu/\!}}
+
+% custom title
+\makeatletter
+\renewcommand*{\maketitle}{%
+\noindent
+\begin{minipage}{0.6\textwidth}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=6pt,inner sep=10pt,fill=blue!50!black,text width= 0.95\textwidth] {\color{white}\Huge \@title};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.35\textwidth}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=3pt,inner sep=10pt,draw=blue!50!black,text width= 0.95\textwidth] {\begin{tabular}{cc} \multirow{2}{1cm}{\includegraphics[width=0.15\columnwidth]{brasao}}& \@author \\ & \ies \end{tabular}};
+\end{tikzpicture}
+\end{minipage}
+\bigskip\bigskip
+}%
+\makeatother
+
+% custom section
+\usepackage[explicit]{titlesec}
+\newcommand*\sectionlabel{}
+\titleformat{\section}
+  {\gdef\sectionlabel{}
+   \normalfont\sffamily\Large\bfseries\scshape}
+  {\gdef\sectionlabel{\thesection\ }}{0pt}
+  {
+\noindent
+\begin{tikzpicture}
+\node[rectangle,rounded corners=3pt,inner sep=4pt,fill=blue!50!black,text width= 0.95\columnwidth] {\color{white}\sectionlabel#1};
+\end{tikzpicture}
+  }
+\titlespacing*{\section}{0pt}{15pt}{10pt}
+
+
+% custom footer
+\usepackage{fancyhdr}
+\makeatletter
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot[C]{\footnotesize \@author \  \ies}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\makeatother
+\usepackage{multirow} % para las tablas
+
+\title{Álgebra Linear}
+\author{Programa de Pós-Graduação}
+\newcommand{\ies}{em Engenharia Civil}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem*{definition}{Definição}
+\newtheorem*{remark}{Observação}
+\newtheorem{corollary}{Corolário}[section]
+
+\begin{document}
+
+
+\maketitle
+
+\begin{multicols*}{2}
+
+
+\section{Definição de Espaço Vetorial}
+
+Um espaço vetorial $S$ deve atender às seguintes propriedades:
+
+\begin{enumerate}[label=(\roman*)]
+    \item comutatividade: $u+v=v+u$;
+    \item associatividade: $(u+v)+w=u+(v+w)$ e $(\alpha \beta)u=\alpha(\beta u)$;
+    \item vetor nulo: existe um vetor $0 \in S$, chamado vetor nulo, ou vetor zero, tal que $u + 0 = 0 + u = u$ para todo $u \in S$;
+    \item inverso aditivo: para cada vetor $u \in S$ existe um vetor $-u \in S$, chamado o inverso aditivo, ou o simétrico de $S$, tal que $u + (-u) = (-u) + u = 0$;
+    \item distributividade: $(\alpha + \beta)v=\alpha v + \beta v$ e
+        $\alpha(u+v)=\alpha u + \alpha v$;
+    \item multiplicação pela unidade: $1 \cdot v = v$.
+\end{enumerate}
+
+Todos esses axiomas devem ser satisfeitos para $\alpha$ e $\beta \in \mathbb{R}$ e $u, v, w \in S$ quaisquer.
+
+\subsection{Exemplos}
+
+\begin{enumerate}
+    \item O espaço vetorial euclidiano $\mathbb{R}^n$, para  $n \in \mathbb{N}$.
+    \item O conjunto das matrizes de ordem $m \times n$ com $m, n \in \mathbb{N}$ e valores reais formam um espaço vetorial.
+    \item Os elementos do espaço $\mathbb{R}^{\infty}$.
+    \item Seja $X$ um conjunto não-vazio qualquer. Denota-se por $\mathbb{F}(X,\mathbb{R})$ o conjunto de todas as funções reais $f, g: X \rightarrow \mathbb{R}$. Este conjunto $\mathbb{F}$ se torna um espaço vetorial quando definimos a soma $f+g$ de duas funções e $\alpha \cdot f$ o produto por uma função escalar: $(f+g)(x) = f(x) + g(x)$, $(\alpha f)(x) = \alpha \cdot f(x)$. 
+\end{enumerate}
+
+\section{Subespaços Vetoriais}
+
+Um subespaço vetorial do espaço vetorial $S$ é um subconjunto $T \subset S$ que atende aos axiomas que definem $S$ como um espaço vetorial e é por si só um espaço vetorial. 
+
+Seja S um espaço vetorial, chamaremos de subespaço vetorial de $S$ o subconjunto $T$ de $S$ que atenda às seguintes propriedades:
+
+\begin{enumerate}[label=(\roman*)]
+    \item $0 \in T$;
+    \item Se $u, v \in T$ então $u+v \in T$;
+    \item Se $u \in T$ então $\alpha u \in T$.
+\end{enumerate}
+
+\subsection{Exemplos}
+
+\begin{enumerate}
+    \item Seja $v \in S$ um vetor não nulo. O conjunto $T = {\alpha v; \alpha \in \mathbb{R} }$ de todos os múltiplos de $v$ é um subespaço de $S$.
+    \item Seja $S = \mathbb{F}(\mathbb{R},\mathbb{R})$ o espaço vetorial de todas as funções reais de uma variável real ($f: \mathbb{R} \rightarrow \mathbb{R}$). Para cada $k \in \mathbb{N}$, o conjunto $C^k (\mathbb{R})$ das funções k-vezes continuamente diferenciáveis é um subespaço de $S$.
+\end{enumerate}
+
+\subsection{Soma Direta}
+
+Sejam $T_1$ e $T_2$ subespaços de S. Podemos obter a partir de $T_1$ e $T_2$ um novo subespaço de $S$ através da união entre esses dois subespaços ($T_1 \cup T_2$); que é, simplesmente, o conjunto formado por todas as somas $t_1 + t_2$, onde $t_1 \in T_1$ e $t_2 \in T_2$. Esse novo espaço será representado por $T_1 + T_2$.
+
+Quando os subespaços $T_1, T_2 \subset S$ têm em comum apenas o elemento ${0}$, ou seja, $T_1 \cap T_2 = {0}$, escreve-se $T_1 \oplus T_2$ ao invés de $T_1 + T_2$ e diz-se que $T = T_1 \oplus T_2$ ($T$ é a soma direta de $T_1$ e $T_2$).
+
+\begin{theorem}
+Sejam $T, T_1, T_2$ subespaços de $S$, com $T_1 \subset T$ e $T_2 \subset T$. As seguintes afirmações são equivalentes:
+
+\begin{enumerate}
+    \item $T = T_1 \oplus T_2$;
+    \item todo elemento $r \in T$ se escreve de maneira única como a soma $r = t_1 + t_2$, onde $t_1 \in T_1$ e $t_2 \in T_2$.
+\end{enumerate}
+\end{theorem}
+
+\section{Bases}
+
+\begin{definition}
+Combinação linear: seja $u_i, (i= 1,\ldots , n)$ um conjunto de vetores de um espaço vetorial $S$, então diz-se que $v$ é uma combinação linear dos vetores $u_i$ se:
+
+\begin{displaymath}
+v = \sum_{i=1}^{n} \alpha_i u_i.
+\end{displaymath}
+\end{definition}
+
+Seja $T$ um subconjunto do espaço vetorial $S$. O subespaço de $S$ gerado por $T$ é, por definição, o conjunto de todas as combinações lineares $\alpha_1 u_1 + \alpha_2 u_2 + \ldots + \alpha_n u_n$ de vetores $u_1, u_2, \ldots, u_n \in T$. Quando o subespaço gerado por $T$ coincide com $S$, dizemos que $T$ é um conjunto de geradores de $S$, neste caso para todo $v \in S$ tem-se: $v = \alpha_1 u_1 + \alpha_2 u_2 + \ldots + \alpha_n u_n$. Ou seja, qualquer elemento de $S$ pode ser obtido através de uma combinação linear dos vetores de $T$.
+
+\subsection{Exemplo}\begin{enumerate}
+    \item Os chamados vetores canônicos constituem um conjunto de geradores do espaço $\mathbb{R}^n$.
+\end{enumerate}
+
+\begin{definition}
+Conjunto linearmente independente: seja $S$ um espaço vetorial. Diz-se que um conjunto $T \subset S$ é linearmente independente (LI) quando nenhum vetor $u \in T$ é combinação linear dos outros elementos de $T$.
+\end{definition}
+
+\begin{remark}
+No caso de $T= {u}$, dizemos que $T$ é LI se $u \ne 0$.
+\end{remark}
+
+\begin{theorem}
+Seja $T$ um conjunto LI do espaço $S$. Se:
+
+\begin{displaymath}
+\alpha_1 u_1 + \ldots + \alpha_n u_n = 0
+\end{displaymath} com $u_i \in T$, então $\alpha_1 = \alpha_2 = \ldots = \alpha_n = 0$. 
+
+\end{theorem}
+
+\subsection{Exemplos}\begin{enumerate}
+    \item Os chamados vetores canônicos são LI.
+    \item Os monômios $1, x, x^2, \ldots, x^n$ em $P^n$ são LI.
+\end{enumerate}
+
+\begin{remark}
+De forma evidente, se um conjunto não é LI, ele é linearmente dependente (LD).
+\end{remark}
+
+\begin{definition}
+Base: uma base de um espaço $S$ é um conjunto $B \subset S$ linearmente independente que gera $S$. Se $\mathfrak{B} = \{u_1, u_2, \ldots, u_n\}$ é uma base de $S$, logo 
+$v=\alpha_1 u_1 + \ldots + \alpha_n u_n$, então $\alpha_1, \ldots, \alpha_n$ são as coordenadas de $v$ na base $\mathfrak{B}$.
+\end{definition}
+
+\subsection{Exemplos}
+
+\begin{enumerate}
+    \item Os chamados vetores canônicos formam uma base de $\mathbb{R}^n$. Os monômios $1, x, x^2, \ldots, x^n$ formam uma base de $P^n$.
+    \item O conjunto de monômios de grau arbitrário $\{1, x, x^2, \ldots, x^n, \ldots\}$ formam uma base do espaço  $P$ de todos os polinômios reais.
+    \item O conjunto $X=\{\overline{e_1}, \ldots, \overline{e_n}, \ldots\} \subset \mathbb{R^{\infty}}$, onde $\overline{e_n}=[0,...,0,1,0,\ldots]$  é LI, mas não gera $\mathbb{R^{\infty}}$.
+\end{enumerate}
+
+\begin{remark}
+Houve um debate na Matemática sobre a existência ou não de uma base para $\mathbb{R^{\infty}}$. O que se sabe é: $\mathbb{R^{\infty}}$ possui uma base que não se consegue computar, pois existe o lema de Zorn que garante que todo espaço vetorial tem uma base.
+\end{remark}
+
+\begin{theorem}
+Se os vetores $v_1, \ldots, v_n$ geram o espaço $S$, então qualquer conjunto com mais de $n$ vetores em $S$ é LD.
+\end{theorem}
+
+\begin{corollary}
+Se os vetores $v_1, \ldots, v_n$ geram o espaço $S$ e os vetores $u_1, \ldots, u_m$ são LI, então $m \leq n$.
+\end{corollary}
+
+\begin{corollary}
+Se o espaço vetorial $S$ tem uma base $\mathfrak{B} = \{u_1, u_2, \ldots, u_n\}$ com $n$ elementos, então qualquer base de $S$ também possuirá $n$ elementos.
+\end{corollary}
+
+\begin{definition}
+Dimensão: diz-se que um espaço vetorial $S$ tem dimensão finita quando admite uma base $\mathfrak{B} = \{u_1, u_2, \ldots, u_n\}$ com um número finito $n$ de elementos. Pelo corolário 2, o número de elementos é o mesmo para todas as bases, logo denota-se a dimensão do espaço $S : n = dim S$. O espaço vetorial $S$ formado apenas pelo elemento $0$ tem dimensão 0.
+\end{definition}
+
+\begin{corollary}
+Se a dimensão de um espaço $S$ é $n$, um conjunto com $n$ vetores gera $S$ se, e somente se é LI.
+\end{corollary}
+
+\begin{theorem}
+Seja $S$ um espaço vetorial de dimensão finita $n$, então:
+\begin{enumerate}[label=(\roman*)]
+    \item todo conjunto $X$ de geradores de $S$ contém uma base;
+    \item todo conjunto LI $\{v_1, \ldots, v_m\} \subset S$ está contido numa base;
+    \item todo subespaço $T \subset S$ tem dimensão finita  $\leq n$;
+    \item se a dimensão do subespaço $T \subset S$ é igual a $n$, então $T=S$.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Exemplos}
+
+\begin{enumerate}
+    \item Os monômios $1, x, x^2, \ldots, x^n$ constituem uma base de $P^n$ (polinômios de grau $\leq n$), logo $P^n$ tem dimensão finita igual a $n+1$.
+    \item O espaço  $P$  de todos os polinômios tem dimensão infinita. 
+    \item $\mathbb{R^{\infty}}$ tem dimensão infinita.
+    \item O espaço vetorial $M_{(m \times n)}$ das matrizes de ordem $m \times n$ tem dimensão igual a $m \cdot n$. 
+\end{enumerate}
+
+\section{Transformações Lineares}
+
+\begin{definition}
+Transformação linear: sejam $T, S$ espaços vetoriais. Uma transformação linear $A: T \rightarrow S$ é uma correspondência que associa a cada vetor $v \in T$ um vetor $A(v)=A \cdot v = Av \in S$ de modo que, para todos $u, v \in T$ e $\alpha \in \mathbb{R}$ valham:
+\begin{enumerate}[label=(\roman*)]
+    \item $A(u+v)=Au + Av$;
+    \item $A(\alpha v)=\alpha Av$.
+\end{enumerate}
+O vetor $Av$ é chamado de imagem de $v$ pela transformação $A$.
+\end{definition}
+
+Consequências:
+
+\begin{enumerate}[label=(\roman*)]
+    \item $A(0)=0, A(0)=A(0+0)=A(0)+A(0)$;
+    \item $u, v \in S$ e $\alpha, \beta \in \mathbb{R}$ tem-se: $A(\alpha u + \beta v)= A (\alpha u) + A(\beta v) = \alpha Au + \beta Av$;
+    \item generalizando, sejam $v_1, \ldots, v_m \in S$ e $\alpha_1, \ldots, \alpha_m \in \mathbb{R}$, vale: $A(\alpha_1 v_1 + \ldots + \alpha_m v_m) = \alpha_1 Av_1 + \ldots + \alpha_m Av_m$;
+    \item $A(-v)=-Av$ e $A(u-v)=Au-Av$.
+\end{enumerate}
+
+A soma de duas transformações lineares $A,B : T \rightarrow S$ e o produto de uma transformação linear (TL) $A:T \rightarrow S$ por um número $\alpha \in \mathbb{R}$ são as TLs:
+
+\begin{enumerate}[label=(\roman*)]
+    \item $A + B: T \rightarrow S, (A+B)v=Av+Bv$;
+    \item $\alpha A:T \rightarrow S, (\alpha A)v=\alpha Av$.
+\end{enumerate}
+Propriedades válidas para todo $v \in T$. O símbolo $0$ denota a TL nula: $0:T \rightarrow S, 0(v)=0$. O que permite definir $-A:T \rightarrow S$ por $(-A)v=-Av$ e 
+$(-A)+ (A) = A + (-A) =0$. 
+
+Seja $\mathfrak{L}(T,S)$ o conjunto das TLs de $T$ em $S$. As definições anteriores caracterizam $\mathfrak{L}(T,S)$ num espaço vetorial. Quando $T=S$, escreve-se apenas $\mathfrak{L}(S)$. AS TLs de um espaço vetorial nele mesmo ganham o sinônimo de operadores lineares em $S$. As TLs $\phi : S\rightarrow \mathbb{R}$ com valores numéricos são chamadas de funcionais lineares. Chama-se de $S^{*}$ o espaço vetorial formado por todas os funcionais lineares $\Phi : S\rightarrow \mathbb{R}$, $S^{*}$ 
+é também chamado de espaço dual de $S$.
+
+\begin{theorem}
+Sejam $T$ e $S$ espaços vetoriais e $\mathfrak{B}$ uma base de $T$. Para cada
+    vetor $u \in \mathfrak{B}$, façamos corresponder (de forma arbitrária) um
+    vetor $u^\prime \in S$. Então existe uma única transformação linear $A:T
+    \rightarrow S$ tal que  $Au=u^\prime$ para cada $u \in B$.
+\end{theorem}
+
+Consequência: se quisermos definir uma TL $A: \mathbb{R}^n \rightarrow \mathbb{R}^m$ basta escolher, para cada $j=1,\ldots, n$, um vetor $v_j = [a_{ij}, a_{2j}, \ldots, a_{mj}] \in \mathbb{R}^{m}$ de tal modo que $v_j=Ae_j$, ou seja, $v_j$ é a imagem do $j$-ésimo vetor da base canônica $e_j$ pela TL $A$. E, uma vez feito isso, podemos obter a imagem de qualquer $u \in \mathbb{R}^{n}$:
+
+\begin{equation*}
+    \begin{split} 
+        Au & = A ( \sum_{j=1}^{n} x_j e _j ) = \sum_{j=1}^{n} x_j A  e_j \\
+        & = \sum_{i=1}^{n} (a_{1j}x_j, a_{2j}x_j, \ldots, a_{mj}x_j) \\
+        & = (\sum_{j=1}^{n} a_{1j} x_j, \sum_{j=1}^{n} a_{2j} x_j, \ldots, \sum_{j=1}^{n} a_{mj} x_j) \\
+        y_1 & = a_{11} x_1 + a_{12} x_2 + \ldots + a_{1n}x_n \\
+        y_2 & = a_{21} x_1 + a_{22} x_2 + \ldots + a_{2n}x_n \\
+        \vdots \\
+         y_m & = a_{m1} x_1 + a_{m2} x_2 + \ldots + a_{mn}x_n 
+    \end{split}
+\end{equation*}
+
+Reescrevendo em forma matricial:
+
+\begin{equation*}
+    y = Au
+\end{equation*}
+
+\subsection{Exemplos}
+
+\begin{enumerate}
+    \item A rotação em um ângulo $\theta$ em torno da origem no plano.
+    \item A projeção ortogonal sobre uma reta que consiste em projetar qualquer vetor $u=[x,y]$ sobre a reta $y=\alpha x$. 
+    \item Exemplo de funcional: produto interno entre funções.
+\end{enumerate}
+
+\subsection{Exercícios}
+
+\begin{enumerate}
+    \item Dado um conjunto de vetores, como verificar se eles formam um conjunto LI?
+    \item Mudança de base.
+\end{enumerate}
+\subsection{Formas Bilineares}
+
+\begin{definition}
+Sejam $T, S$ dois espaços vetoriais. Dizemos que uma função $b:T \times S \rightarrow \mathbb{R}$, denotada por $b(u,v)$ para $u \in T$ e $v \in S$ é uma forma bilinear se ela for linear em cada argumento. A forma bilinear atende às seguintes propriedades:
+
+    \begin{enumerate}[label=(\roman*)]
+        \item $b(u+u^\prime,v)=b(u,v)+b(u^\prime,v)$;
+        \item $b(u, v + v^\prime)=b(u,v)+b(u, v^\prime)$;
+        \item $b(\alpha u,v)=\alpha b(u,v)$;
+        \item $b(u,\alpha v)=\alpha b(u,v)$.
+    \end{enumerate}
+Onde $u, u^\prime \in T$, $v, v^\prime \in S$ e $\alpha \in \mathbb{R}$. Essas definições de soma e produto fazem do conjunto $\mathfrak{L}(T \times S)$ formado por todas as formas bilineares $b: T \times S \rightarrow \mathbb{R}$ um espaço vetorial por si só. O produto escalar ou produto interno $u \cdot v = (u,v) = u_1 v_1+ u_2 v_2+\ldots u_n v_n$, para $u, v \in \mathbb{R}^{n}$ é uma forma bilinear $(u,v): \mathbb{R}^{n} \times \mathbb{R}^{n} \rightarrow \mathbb{R}$.
+\end{definition}
+
+Seja $L^2 (\Omega)= \{f \in L^2 (\Omega): \int_{\Omega} f^2 \: dx < \infty \} $. No caso de funções $f,g$ de quadrado integrável no domínio $\Omega$, isto é, $f,g \in L^{2}(\Omega)$, o produto interno entre $f,g$ é: 
+
+\begin{equation*}
+    (f,g)=\int_{\Omega} fg \: dx
+\end{equation*}
+
+\subsection{Produto de Transformações Lineares}
+
+\begin{definition}
+Produto de transformações lineares: sejam as TLs $A: T \rightarrow S$, $B: S \rightarrow E$, onde o domínio de $B$ é o contra-domínio de $A$. O produto $BA: T \rightarrow E$ que mapeia cada $u \in T$ em $E$, $(BA)u=B(Au)$.
+\end{definition}
+
+Deve-se observar que $BA$ é por si só uma TL, $BA$ representa a TL composta $B \circ A$ das TLs $B$ e $A$. Para $C: E \rightarrow F$ e $A,B:T \rightarrow E$ , valem:
+
+\begin{enumerate}[label=(\roman*)]
+    \item associatividade: $(CB)A = C(BA)$;
+    \item distributividade à esquerda: $(B+C)A = BA + CA$;
+    \item distributividade à direita: $C(A+B) = CA + CB$.
+\end{enumerate}
+
+\subsection{Exemplo}
+
+\begin{enumerate}
+    \item Uma rotação $R$  do exemplo 4.1 seguida da projeção ortogonal sobre uma reta (do exemplo 4.2). 
+\end{enumerate}
+
+\subsection{Núcleo e Imagem de Uma Transformação Linear}
+
+\begin{definition}
+Núcleo de uma TL: sejam $T$ e $S$ espaços vetoriais e $A:T \rightarrow S$ uma TL. Chamamos de núcleo de $A$, denotado por $\mathbf{N}(A)$ o conjunto definido por:
+
+  \begin{equation*}
+      \mathbf{N}(A) = \{v: v \in T, A(v)=0\}
+  \end{equation*}
+\end{definition}
+
+\begin{definition}
+Imagem de uma TL: sejam T, S e A definidos anteriormente. Chamamos de imagem de $A$, denotada por $\mathbf{Im}(A)$, o conjunto definido por:
+
+      \begin{equation*}
+      \mathbf{Im}(A) = \{u: Av = u, v \in T, u \in S\}
+  \end{equation*}
+
+\end{definition}
+
+A imagem de $A$ é um subespaço vetorial de $S$. Quando $\mathbf{Im}(A)=S$, diz-se que a TL $A$ é sobrejetiva.
+
+\begin{definition}
+Inversa à direita de uma TL: seja uma TL $A:T \rightarrow S$ com $T$ e $S$ espaços vetoriais de dimensão finita. Diz-se que $A$ tem uma inversa à direita $B$ se $AB=I_T$ ($I_T$ é a TL identidade de $T$), ou seja, $AB(u)=u$ para todo $u \in T$.
+\end{definition}
+
+\begin{theorem}
+Seja $A:T \rightarrow S$ uma TL entre espaços de dimensão finita, $A$ possui uma inversa à direita se e somente se $A$ é sobrejetiva.
+\end{theorem}
+
+Uma TL $A:T \rightarrow S$ é chamada de injetiva quando para $u,u^\prime
+\in T$ quaisquer, tem-se $Au \ne Au^\prime$ em $S$, se $u \ne u^\prime$.
+
+\begin{theorem}
+Para que uma TL $A:T \rightarrow S$ seja injetiva, é necessário e suficiente que seu $\mathbf{N}(A)$ contenha apenas o vetor nulo, em outras palavras, $dim(\mathbf{N}(A)) = 0$.
+\end{theorem}
+
+\begin{definition}
+Inversa à esquerda de uma TL: seja uma TL $A:T \rightarrow S$ com $T$ e $S$ espaços vetoriais de dimensão finita. Diz-se que $A$ tem uma inversa à esquerda $B$ se $BA=I_S$ ($I_S$ é a TL identidade de $S$), ou seja, $BA(u)=u$ para todo $u \in T$.
+\end{definition}
+
+\begin{theorem}
+Seja $A:T \rightarrow S$ uma TL entre espaços de dimensão finita, $A$ possui
+    uma inversa à esquerda se e somente se $A$ é injetiva.
+\end{theorem}
+
+\begin{definition}
+Transformação linear invertível: uma TL $A:T \rightarrow S$ com $T$ e $S$ é chamada de invertível se existir $B:S \rightarrow T$ linear tal que $BA=I_T$ e $AB=I_S$, ou seja, $B$ é ao mesmo tempo inversa à esquerda e à direita de $A$. Diz-se que $B$ é a inversa de $A$ e $(A)^{-1} = B$.
+\end{definition}
+
+\begin{theorem}
+Uma TL $A:T \rightarrow S$ tem inversa se e somente se ela é injetiva e sobrejetiva. Neste caso, diz-se que $A$ é bijetiva ou $A:T \rightarrow S$ é um isomorfismo e que $T$ e $S$ são isomorfos.
+\end{theorem}
+
+Um isomorfismo $A:T \rightarrow S$ transforma uma base de $T$ em uma base de $S$.
+
+\begin{theorem}
+Sejam $T$ e $S$ espaços vetoriais de dimensão  finita. Para toda TL $A:T \rightarrow S$, vale:
+  \begin{equation*}
+      dim(T)=dim(\mathbf{N}(A)) + dim(\mathbf{Im}(A)) 
+  \end{equation*}
+\end{theorem}
+
+\subsection{Problema de Autovalor}
+
+\begin{definition}
+Transformação linear adjunta: chamaremos de TL adjunta de $A$ a TL $A^{*}:S \rightarrow T$ tal que, para $A:T \rightarrow S$, $u \in T$ e $v \in S$ quaisquer vale:
+
+    \begin{equation*}
+        (Au,v) = (u, A^{*}v)
+    \end{equation*}
+    
+Diz-se que a TL $A:T \rightarrow S$ é autoadjunta se $A=A^{*}$.
+
+\end{definition}
+
+\begin{definition}
+Problema de autovalor padrão: seja $A:S \rightarrow S$ uma TL. Um vetor $x \ne
+    0$ é chamado de autovetor de $A$ se existe $\lambda \in \mathbb{R}$ ou
+    $\lambda \in \mathbb{C}$ tal que:
+
+    \begin{equation*}
+        Ax=\lambda x
+    \end{equation*}
+
+O número $\lambda$, por sua vez, é chamado de autovalor de $A$. Para cada autovalor, tem-se um autovetor associado.
+
+\end{definition}
+
+\begin{theorem}
+Para autovalores distintos do mesmo operador (TL), há autovetores associados que são LI.
+\end{theorem}
+
+\begin{theorem}
+Sejam $\lambda_i$ e $\lambda_j$ autovalores distintos de um operador autoadjunto $A:S \rightarrow S$, então os autovetores associados $x_i$ e $x_j$ são ortogonais ($(x_i,xj)=0$).   
+\end{theorem}
+
+\begin{theorem}
+Para todo operador autoadjunto $A:S \rightarrow S$ num espaço de dimensão finita com produto interno, existe uma base ortonormal $\{x_1,x_2,\ldots,x_n\} \subset S$ formada pelos autovetores de $A$.
+\end{theorem}
+
+\begin{corollary}
+Toda matriz simétrica possui autovalores reais.
+\end{corollary}
+
+\begin{definition}
+Multiplicidade: seja o operador $A: S \rightarrow S$ um operador de dimensão finita. Chama-se multiplicidade algébrica (abreviadamente $ma(\lambda_i))$ do autovalor $\lambda_i$ a potência do termo $(\lambda - \lambda_i)$ que ocorre no polinômio característico. A multiplicidade geométrica de um autovalor $\lambda_i$ é a quantidade de autovetores LI associados ao autovalor.
+\end{definition}
+
+\begin{theorem}
+Seja $A: S \rightarrow S$ um operador linear entre espaços de dimensão finita $n$. Se possuir autovalores não distintos, pode-se afirmar que:
+
+\begin{equation*}
+    mg(\lambda_i) = n - posto(A-\lambda_i I)
+\end{equation*}
+Onde $mg(\lambda_i)$ é a multiplicidade geométrica do autovalor $\lambda_i$.
+\end{theorem}
+
+\end{multicols*}
+
+\end{document}
