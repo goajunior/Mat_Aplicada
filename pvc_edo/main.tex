@@ -1,0 +1,405 @@
+% Template created by Karol Kozioł (www.karol-koziol.net) for ShareLaTeX
+
+\documentclass[a4paper,portuguese,9pt,final]{extarticle}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{pgf,tikz}
+
+\usepackage{enumitem}
+\usepackage{flexisym}
+
+\usetikzlibrary{shapes, calc, shapes, arrows, babel}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\everymath{\displaystyle}
+\usepackage{mathrsfs}
+\usepackage{times}
+\renewcommand\familydefault{\sfdefault}
+\usepackage{tgheros}
+% \usepackage[defaultmono,scale=0.85]{droidmono}
+
+\usepackage{multicol}
+\setlength{\columnseprule}{0pt}
+\setlength{\columnsep}{20.0pt}
+
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{eurosym}
+
+\usepackage{graphicx}
+\graphicspath{{./img/}}
+\usepackage{svg}
+
+\usepackage{hyperref}
+
+\usepackage{geometry}
+\geometry{
+a4paper,
+total={210mm,297mm},
+left=10mm,right=10mm,top=10mm,bottom=15mm}
+
+\linespread{1.3}
+
+\newcommand{\samedir}{\mathbin{\!/\mkern-5mu/\!}}
+
+% custom title
+\makeatletter
+\renewcommand*{\maketitle}{%
+\noindent
+\begin{minipage}{0.6\textwidth}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=6pt,inner sep=10pt,fill=blue!50!black,text width= 0.95\textwidth] {\color{white}\Huge \@title};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.35\textwidth}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=3pt,inner sep=10pt,draw=blue!50!black,text width= 0.95\textwidth] {\begin{tabular}{cc} \multirow{2}{1cm}{\includegraphics[width=0.15\columnwidth]{brasao}}& \@author \\ & \ies \end{tabular}};
+\end{tikzpicture}
+\end{minipage}
+\bigskip\bigskip
+}%
+\makeatother
+
+% custom section
+\usepackage[explicit]{titlesec}
+\newcommand*\sectionlabel{}
+\titleformat{\section}
+  {\gdef\sectionlabel{}
+   \normalfont\sffamily\Large\bfseries\scshape}
+  {\gdef\sectionlabel{\thesection\ }}{0pt}
+  {
+\noindent
+\begin{tikzpicture}
+\node[rectangle,rounded corners=3pt,inner sep=4pt,fill=blue!50!black,text width= 0.95\columnwidth] {\color{white}\sectionlabel#1};
+\end{tikzpicture}
+  }
+\titlespacing*{\section}{0pt}{15pt}{10pt}
+
+
+% custom footer
+\usepackage{fancyhdr}
+\makeatletter
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot[C]{\footnotesize \@author \  \ies}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\makeatother
+\usepackage{multirow} % para las tablas
+
+\title{Problemas de Valor de Contorno para EDOs}
+\author{Programa de Pós-Graduação}
+\newcommand{\ies}{em Engenharia Civil}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem*{definition}{Definição}
+\newtheorem*{remark}{Observação}
+\newtheorem{corollary}{Corolário}[section]
+\newtheorem{lema}{Lema}[section]
+\newtheorem{example}{Exemplo}[section]
+
+
+\providecommand{\sin}{} \renewcommand{\sin}{sen}
+
+
+\begin{document}
+\maketitle
+
+\begin{multicols*}{2}
+
+
+\section{Introdução}
+
+    \begin{definition}
+
+        Problema de Valor de Contorno (PVC ) para EDO: a EDO do tipo $ Ly=h $ \textbf{(i)}, onde $ L $ é um operador diferencial definido no intervalo $ [a,b] $ e $ h \in C^{0}[a,b] $ conjuntamente com condições de contorno na forma:
+        
+        $$\mbox{\textbf{(ii)} \ }\begin{cases}
+            \alpha_{1} y(a) + \alpha_{2} y(b) + \alpha_{3} y'(a) + \alpha_{4} y'(b) = \gamma_{1} \\ 
+	\beta_{1} y(a) + \beta_{2} y(b) +\beta_{3} y'(a) + \beta_{4} y'(b) = \gamma_{2} \ ,
+\end{cases}$$
+
+onde $ \alpha_{i} \ ,  \beta_{i}  \mbox{ e } \gamma_{j} \in \mathds{R} \ (i=1,2,3,4 \mbox{ e } j=1,2) $, formam um PVC para EDO.
+
+
+    \end{definition}
+
+    Obviamente, o problema consiste em encontrar todas as funções $ y \in C^{2}[a,b] $ que satisfaçam \textbf{(i)} e \textbf{(ii)} simultaneamente. \\
+    
+    \begin{example}	
+        A EDO $y'' + y = 0$, com $y(0) = y(\pi) = 0$ é um PVC para EDO no intervalo $[0,\pi]$.
+    \end{example}
+
+    \textit{Obs:}\begin{enumerate}
+        \item Ao menos uma das constantes $ \alpha_{i} $ e uma das constantes $ \beta_{i} $ devem ser diferentes de zero.
+        \item Chamaremos de condições de contorno homogêneas quando $ \gamma_{1}=\gamma_{2}=0 $. Desta forma, dizemos que um subespaço $ S $ de $ C^{2}[a,b] $ é o conjunto solução de $ Ly=h $, ou escrito em forma de operador:
+        
+            $ L:S\to C^{0}[a,b], S \subset C^2 [a,b].$
+    \end{enumerate}
+
+\section{Problema de Autovalor em PVC para EDO}
+
+
+    Em muitas situações, temos que considerar a solução do seguinte problema:
+
+    $$Ly=\lambda y  \mbox{\textbf{ \ (iii)}},$$
+    onde $ L:S\to C^{0}[a,b] $ e $\lambda$ é um parâmetro a se determinar. Neste caso, estamos interessados em encontrar todos os valores de $\lambda$ para os quais \textbf{(iii)} não admite solução trivial em $ S $, com condições de contorno homogêneas associadas.
+
+    \begin{example}	
+        $y'' + \lambda y = 0$ com $y(0) = 0$ e $y(\pi) = 0$.
+    \end{example}
+
+\section{Operadores Autoadjuntos e Problemas de Sturm-Liouville (PSL)}
+
+    
+    Relembrando que um operador linear $L$ é autoadjunto se:
+
+    $$ (Ly_{1}) \cdot y_{2} = (Ly_{1} , y_{2}) = y_{1} \cdot Ly_{2} =  (y_{1} , Ly_{2})$$
+
+
+    Vamos examinar o caso $ L=-D^{2} $ do exemplo 2.1:
+    $$ (Ly_{1} , y_{2}) = -\int_{0}^{\pi} y_{1}''y_{2}dx=-\left[y_{1}'y_{2}\right]_{0}^{\pi} + \int_{0}^{\pi} y_{1}'y_{2}'dx $$
+
+
+    Lembrando que as condições de contorno para $ -D^{2} $ são $ y(0) = y(\pi) = 0 $, temos:
+    $ \displaystyle (Ly_{1} , y_{2}) = \int_{0}^{\pi} y_{1}'y_{2}'dx  $. \\
+
+    Já $ \displaystyle (y_{1} , Ly_{2}) = -\int_{0}^{\pi} y_{1}y_{2}''dx=-\left[y_{1}y_{2}'\right]_{0}^{\pi} + \int_{0}^{\pi} y_{1}'y_{2}'dx = \int_{0}^{\pi} y_{1}'y_{2}'dx $. \\
+
+
+    O que implica que $ (-D^{2}y_{1} , y_{2})=(y_{1} , -D^{2}y_{2} ) $, ou seja, o operador $ -D^{2} $ é autoadjunto pelo produto interno $ \displaystyle (y_{1},y_{2}) = \int_{0}^{\pi}y_{1} y_{2} dx $ . Isso permite trazer de volta o corolário (4.1) da seção 4 da primeira parte do curso: \\
+
+    \underline{\textit{Corolário 4.1}}: Todo operador autoadjunto possui autovalores reais.\\
+
+    E o teorema (4.8):
+
+    \textbf{\underline{Teorema 4.8}}: Seja $ \lambda_{1} $ e $ \lambda_{2} $ autovalores distintos de um operador autoadjunto, então os autovetores $ y_{1} $ e $ y_{2} $ associados à $ \lambda_{1} $ e $ \lambda_{2} $ são ortogonais. \\
+
+    Resta determinar sob quais condições de contorno o operador $L:S \rightarrow C^0 [a,b]$, sendo $S \subset C^2[a,b]$ será autoadjunto.
+
+    \begin{lema}
+
+        Identidade de Lagrange: se $ L=D\left(p(x)D\right) + q(x) $ é um operador diferencial linear autoadjunto em $ [a,b] $ e se $ y_{1} $ e $ y_{2} $ são duas vezes diferenciáveis em $ [a,b] $, vale:
+
+        $$ y_{1}(Ly_{2}) - (Ly_{1})y_{2} = \left(p(y_{1}y_{2}'-y_{2}y_{1}')\right)' \mbox{ \ \textbf{(iv)} \ } $$
+    \end{lema}
+
+    A identidade de Lagrange pode ser escrita numa forma mais interessante se integrarmos os lados esquerdo e direito de $ a $ até $ b $:
+    $$ (y_{1},Ly_{2}) - (Ly_{1},y_{2}) = \left[ p(y_{1}y_{2}' - y_{2}y_{1}') \right]_{a}^{b}  $$
+
+    \begin{theorem}	
+        
+        Seja $ S $ um subespaço de $ C^{2}[a,b] $ determinado pelo par de condições de contorno:
+        $$\alpha_{1} y(a) + \alpha_{2} y(b) + \alpha_{3} y'(a) + \alpha_{4} y'(b) = 0 $$
+        $$\beta_{1} y(a) + \beta_{2} y(b) +\beta_{3} y'(a) + \beta_{4} y'(b) = 0 $$
+
+        Seja $L$ um operador (diferencial e linear) $ L:S \to C^{0}[a,b] $. Então $L$ será autoadjunto com relação ao produto interno padrão em $ C^{0}[a,b] $ se e somente se:
+        $ \left[ p(y_{1}y_{2}' - y_{2}y_{1}') \right]_{a}^{b} = 0 $, para todos $ y_{1}$ e $  y_{2} \in S $. Ou seja, se e somente se,
+
+
+        $$ p(b)[y_{1}(b)y_{2}'(b)-y_{2}(b)y_{1}'(b)] - p(a)[y_{1}(a)y_{2}'(a)-y_{2}(a)y_{1}'(a)] = 0 \ .$$
+    \end{theorem}
+
+    Através da  última forma da identidade, podemos cair em 3 casos:
+
+    \begin{itemize}
+        \item \textbf{Caso 1}: $ p(a)=p(b)=0 $. A identidade é satisfeita sem restrições e $ S=C^{2}[a,b] $
+        
+        
+        \item \textbf{Caso 2}: $ S $ será o subespaço de todas as funções $ y \in C^{2}[a,b] $ tal que:
+        
+        $$\alpha_{1}y(a)+\alpha_{2}y'(a)=0$$
+        
+        $$\beta_{1}y(b)+\beta_{2}y'(b)=0 \mbox{ , com}$$
+        
+        $
+        $ |\alpha_{1}|+|\alpha_{2}|\neq 0 \mbox{ e } |\beta_{1}| + |\beta_{2}| \neq 0 \mbox{ . Se } y_{1} \mbox{ e } y_{2} \in S \mbox{ , então:} $
+        $
+        
+        $$ y_{1}(a)y_{2}'(a)-y_{2}(a)y_{1}'(a)=0 $$
+        
+        $$ y_{1}(b)y_{2}'(b)-y_{2}(b)y_{1}'(b)=0 \ . $$
+        
+        Em outras palavras, um ODL é autoadjunto  em todo subespaço $ S \subset C^{2}[a,b] $ descrito por um par de condições de contorno não mistas.
+        
+        
+        \item \textbf{Caso 3} (condições de contorno periódicas): Seja $ p(a)=p(b) $ e $ S $ o subespaço de $ C^{2}[a,b] $ consistindo de todas as funções $ y $ que satisfaçam a:
+        
+        $$ y(a)=y(b) $$
+        
+        $$ y'(a)=y'(b) \ . $$
+        
+        Ou seja, um ODL será autoadjunto em $ S\subset C^{2}[a,b] $ se for descrito por condições de contorno periódicas.
+
+        \begin{example}	
+            Se $L=-D^2$ e $S$ o subespaço de $C^2[a,b]$ com condições de contorno $y(0)=y(\pi)=0$.
+        \end{example}
+
+        \begin{example}	
+            Se $L=-D^2$ e $S$ o subespaço de $C^2[a,b]$ com condições de contorno $y(0)=y(2 \pi)$ e $y'(0)=y'(2 \pi)$.
+        \end{example}
+
+        \begin{definition}
+            Problema de Sturm-Liouville (PSL) para EDO: PVCs que envolvem ODLs autoadjuntos que possuam autofunções ortogonais e que podem ser escritos na forma
+            $$ D( \ p(x) \ D)y + [q(x)-\lambda]y=0 $$
+            conjuntamente com condições de contorno homogêneas são chamados de PSL para EDOs.
+        \end{definition}
+
+        \begin{example}	
+            Resolver o PSL: $y'' + \lambda y = 0$ com $y(0) = 0$ e $\alpha y(L) + y'(L) = 0$, $\alpha$ e $L>0$.   
+        \end{example}
+\section{Problemas dde Valor de Contorno e Expansões em Séries}
+
+    Até o presente momento, todos os PVC's abordados eram EDO's homogêneas, porém em muitos casos recairemos em PVC's não homogêneos
+    $$Ly=h \ ,$$
+    acompanhado das devidas condições de contorno com $ h \in C^{0}[a,b] $ e $ L $ um ODL de 2ª ordem tal que, $ L:S \to C^{0}[a,b] $, sendo $ S \subset C^{2}[a,b] $.
+
+
+    Se $ L $ é autoadjunto e possui autovalores distintos ($ \lambda_{1}, \lambda_{2}, \lambda_{3}, ... $) então as autofunções $ \phi_{1}(x), \phi_{2}(x), \phi_{3}(x),... $ formam uma base para o espaço $ C^{0}[a,b] $, além disso, sabemos que essas autofunções são mutualmente ortogonais e podemos tirar partido disso para escrever $ h(x) $ como:
+    $$ h(x)=\sum_{n=1}^{\infty} c_{n}\phi_{n}(x)$$ 
+   Lembrando que essa série converge na média para $h$ e que:
+
+    $$ c_{n}=\frac{(h,\phi_{n})}{||\phi_{n}||^{2}} = \frac{\displaystyle\int_{a}^{b} h(x)\phi_{n}(x)dx}{\displaystyle\int_{a}^{b} [\phi_{n}(x)]^{2}dx}.$$
+
+
+    Utilizaremos uma expansão semelhante para $ y(x) $:
+
+    $$\displaystyle y(x)=\sum_{n=1}^{\infty} \alpha_{n}\phi_{n}(x)$$
+
+    e substituindo as expansões de $ h(x) $ e $ y(x) $ em $ Ly=h $, chegamos à seguinte igualdade
+
+    $$\displaystyle L\left[\sum_{n=1}^{\infty}\alpha_{n}\phi_{n}(x)\right] = \sum_{n=1}^{\infty}c_{n}\phi_{n}(x)  \ . $$
+
+
+
+    Tirando proveito da linearidade de $ L $, temos:
+
+    $$\displaystyle \sum_{n=1}^{\infty}\alpha_{n}\lambda_{n}\phi_{n}(x) = \sum_{n=1}^{\infty}c_{n}\phi_{n}(x)  \ , $$ 
+
+    se essas duas séries são iguais, temos que ter $ \alpha_{n}\lambda_{n}=c_{n} $, ou:
+
+    $$\alpha_{n}=\frac{c_{n}}{\lambda_{n}} \ ,$$
+
+    onde $ c_{n} $ e $ \lambda_{n} $ são parâmetros conhecidos, logo $ y(x) $ está completamente determinada
+
+    $$ y(x)= \sum_{n=1}^{\infty}\frac{c_{n}}{\lambda_{n}}\phi_{n}(x).$$
+
+    \
+
+
+    \textit{Obs:} Essa expansão leva em conta que $ \lambda_{n}\neq 0 $ e, neste caso, a solução é única. Porém, caso tenhamos algum $ \lambda_{k}=0 $ ($ k $ inteiro positivo qualquer), o problema não tem solução se $ c_{k}\neq 0 $ e infinitas soluções se $ c_{k}=0 $.
+
+    \begin{example}	
+        Resolver o PSL $-y''=x$ com $y(0)=y(\pi)=0$.
+    \end{example}
+
+\section{Ortogonalidade e Função Peso}
+
+    
+    Podemos generalizar o problema de Sturm-Liouville escrevendo-o na seguinte forma:
+    $$ D\left(p(x) \ D\right)y + \left[q(x) - \lambda \ r(x)\right]y=0 $$
+    definido no intervalo $ [a,b] $, além de um par de condições de contorno que servirão para determinar o domínio do operador $L=D(p(x)D)+q(x)$. A função $r(x)$ pertence ao espaço das funções contínuas em $[a,b] \ (C^{0}[a,b])$ e ela é não-negativa nesse intervalo.
+
+    Os valores $\lambda$ que conferem à forma mais geral do PSL soluções não triviais são ainda chamados de autovalores e as soluções não triviais são ainda chamadas de autofunções.
+
+    Vamos analisar dois autovalores distintos ($ \lambda_{1} $ e $ \lambda_{2} $) e suas autofunções associadas ($ y_{1} $ e $ y_{2} $). Neste caso, valem as relações: \\
+
+    $$Ly_{1}=\lambda_{1} \ r(x) \ y_{1}(x)$$
+
+    $$Ly_{2}=\lambda_{2} \ r(x) \ y_{2}(x)$$ 
+
+    
+
+    A identidade de Lagrange implica em: \\
+
+    $(\lambda_{1}-\lambda_{2}) \ r(x) \ y_{1}(x) \ y_{2}(x) = y_{2}(x) \ [Ly_{1}(x)] - y_{1}(x) \ [Ly_{2}(x)]$\\
+
+
+    $ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \  \ = D[p(x) \ [y_{1}(x)y_{2}'(x) - y_{2}(x)y_{1}'(x)]]$ 
+
+
+    Integrando essa última expressão de $ a $ até $ b $:
+
+    $\displaystyle(\lambda_{1}-\lambda_{2}) \int_{a}^{b}r(x) y_{1}(x) y_{2}(x) dx = p(x) \ [y_{1}(x)y_{2}'(x) - y_{2}(x)y_{1}'(x)]_{a}^{b}$ \\
+
+
+
+    No caso de termos o lado direito nulo, chegamos a:
+
+    $$\displaystyle \int_{a}^{b}r(x) y_{1}(x) y_{2}(x) dx = 0$$ 
+
+
+    O que implica que as autofunções $ y_{1} $ e $ y_{2} $ são ortogonais com respeito à função $ r(x) $ em $ C^{0}[a,b] $. Chamaremos $ r(x) $ de função peso e definimos o produto interno:
+
+    $$ (f,g) = \displaystyle \int_{a}^{b} f(x) g(x) r(x)dx \mbox{ \ \ \textbf{(i)}} $$\
+
+    \begin{theorem}	
+        Seja $ L $ um ODL autoadjunto no intervalo $ [a,b] $ e $ r(x) $ uma função peso $ [a,b] $ e $ S $ o subespaço de $ C^{2}[a,b] $ que é o domínio de $ L $, então:
+        $$ p(x) \ [y_{1}(x)y_{2}'(x) - y_{2}(x)y_{1}'(x)]_{a}^{b} = 0 $$
+        para qualquer par de funções $ y_{1}$  $ $ e $ y_{2} $ em $S$. Então qualquer conjunto de autofunções associadas a distintos autovalores do PSL:
+        $$ Ly=\lambda r(x)y $$
+        é ortogonal em $ C^{0}[a,b] $ com relação ao produto interno definido em (i).
+    \end{theorem}
+
+    \begin{example}	
+        Solucione o PSL $y'' + 4y' + (4- 9 \lambda)y =0$, com $y(0)=y(a)=0$.
+    \end{example}
+
+    \begin{example}	
+        Determinar a autofunção normalizada de $y'' + \lambda y = 0$, $y(0)=y(1)=0$.
+    \end{example}
+    
+    \begin{example}	
+        Resolver o PSL: $y'' + \lambda y =0$, com $y(0) = 0$ e $y'(1) + y(1) =0$.
+    \end{example}
+
+    
+    Para PSL's com funções peso não homogêneas, podemos proceder como o caso de PSL's não homogêneas sem a função peso:
+    $$ Ly = D(p(x)) Dy + q(x)y = \mu r(x) y + f(x),\textbf{(ii)}$$
+    com as condições de contorno associadas e definido em $ [a,b] $.  
+
+
+
+    Seja $\lambda$ o autovalor de $ L $:
+    $$ Ly = \lambda r(x) y.$$ 
+
+    Vamos supor que se a solução de $ y(x) $ da eq. (ii) seja escrita como 
+
+    $$ y(x) = \sum_{n=1}^{\infty} b_{n}\phi_{n}(x)  \mbox{, \ com  \ } b_{n} = \int_{a}^{b} r(x)y(x)\phi_{n}(x)dx  \mbox{ \ \ \ \textbf{(iii)}}$$
+
+    $$ Ly(x) = \mu r(x)y(x) + f(x) = \sum_{n=1}^{\infty}b_{n}\lambda_{n}r(x)\phi_{n}(x) \mbox{\ \ \ \textbf{(iv)}} $$
+
+    Se $ \displaystyle \frac{f(x)}{r(x)} = \sum_{n=1}^{\infty}c_{n}\phi_{n}(x) $ e usando $ \frac{f(x)}{r(x)}$ no lugar de $y$ em (iii):
+
+    $$  c_{n} = \int_{a}^{b} r(x) \frac{f(x)}{r(x)} \phi_{n}(x)dx = \int_{a}^{b} f(x)\phi_{n}(x)dx \mbox{ \ \ } n=1,2,...  $$
+
+    Juntando tudo em (iv):
+
+    $$ \sum_{n=1}^{\infty}b_{n}\lambda_{n}r(x)\phi_{n}(x) = \mu r(x) \sum_{n=1}^{\infty} b_{n}\phi_{n}(x) + r(x) \sum_{n=1}^{\infty}c_{n}\phi_{n}(x) \mbox{ , temos}  $$
+
+    $$  \sum_{n=1}^{\infty} \left[ (\lambda_{n}-\mu)b_{n} - c_{n} \right]\phi_{n}(x) = 0 \mbox{ , o que implica que}  $$
+
+    $$  (\lambda_{n}-\mu)b_{n} - c_{n} = 0 \Rightarrow b_{n}=\frac{c_{n}}{\lambda_{n}-\mu} \mbox{ \ , e a solução é:}  $$
+
+    $$ y(x)=\sum_{n=1}^{\infty} \frac{c_{n}}{\lambda_{n}-\mu} \phi_{n}(x)   $$
+
+
+    Temos que nos preocupar agora com a  convergência dessa série que expande $ y(x) $. O teorema a seguir aborda o tema. \\
+
+    \begin{theorem}	
+        
+        O PSL não homogêneo generalizado tem solução única para toda função $ f(x) $ contínua se $ \mu $ for diferente dos autovalores $ \lambda_{n} $ do problema homogêneo associado. A série convergirá para todo $ x \in [a,b] $. Se $ \mu $ for igual a um autovalor $ \lambda_{k} $ ($ k $ inteiro positivo qualquer), então o PSL não homogêneo com função peso não tem solução, a não ser que $\displaystyle \int_{a}^{b} f(x)\phi_{k} dx=0 $, ou seja, $ f(x) $ e $ \phi_{k}(x) $ são ortogonais e, neste caso, a solução é única e contém um múltiplo arbitrário de $ \phi_{k}(x) $.
+
+    \end{theorem}
+
+    \begin{example}	
+        Determine a solução de $y'' + 2y = -x$ com $y(0)=0$ e $y(1) + y'(1) = 0$.
+    \end{example}
+\end{multicols*}
+
+\end{document}
